@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/Git_api.props" />
+</Project>
