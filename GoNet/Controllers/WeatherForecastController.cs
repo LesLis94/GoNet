@@ -30,7 +30,7 @@ public class WeatherForecastController : ControllerBase
         .ToArray();
     }
 
-    [HttpGet("test"]
+    [HttpGet("test")]
     public int GetInt()
     {
         return 5;
