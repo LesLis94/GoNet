@@ -1,25 +1,35 @@
 ﻿using System;
 namespace GoNet.Class
 {
-	public static class Ruletka
+	public class Ruletka
 	{
-        private static Random random = new Random();
-		private static string[] colors = new string[] { "красное", "черное" };
+        public Random random = new Random();
+		public string[] colors = new string[] { "красное", "черное" };
 		
 
 
-        public static string resultGame()
+        public string resultGame()
 		{
 
-			int value = random.Next(1, 26);
-			string color = colors[random.Next(0, 2)];
+			var value = resultValue();
+			var color = resultColor();
 
-			return Convert.ToString(value + " " + color);
-
+            //return Convert.ToString(value + " " + color);
+            return $"{value} {color}";
 		}
 
+		public int resultValue()
+		{
+			return random.Next(1, 26);
+        }
+
+        public string resultColor()
+        {
+            return colors[random.Next(0, 2)];
+        }
 
 
-	}
+
+    }
 }
 
