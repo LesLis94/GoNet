@@ -51,7 +51,7 @@ public class WeatherForecastController : ControllerBase
         //Ruletka.resultGame();
         Ruletka ruletka = new Ruletka();
 
-        return ruletka.resultGame();
+        return ruletka.ResultGame();
     }
 
     [HttpPost("EnterValueColor")]
