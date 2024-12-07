@@ -10,11 +10,13 @@ namespace GoNet.Class
 		
 
 
-        public string ResultGame()
+        public string ResultGame(int valueP, string colorP, Players player)
 		{
 
-			var value = ResultValue();
-			var color = ResultColor();
+			int value = ResultValue();
+			string color = ResultColor();
+
+
 
             //return Convert.ToString(value + " " + color);
             return $"{value} {color}";
@@ -30,8 +32,7 @@ namespace GoNet.Class
             return colors[random.Next(0, 2)];
         }
 
-
-
+       
     }
 }
 

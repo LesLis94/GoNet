@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GoNet.Class;
+using GoNet.Interfaces;
+using System.Drawing;
+using System.Numerics;
 
 namespace GoNet.Controllers;
 
@@ -36,31 +39,32 @@ public class WeatherForecastController : ControllerBase
 
         player.Id = NextPlayersId;
         players.Add(player);
-
         return Ok();
     }
 
 
 
 
+   private string ResultGame(IRoulette roulette, int value, string color, Players player) => roulette.ResultGame(value, color, player);
 
-
-    [HttpGet("resultGame")]
+   /* [HttpGet("resultGame")]
     public string GetInt()
     {
         //Ruletka.resultGame();
         Ruletka ruletka = new Ruletka();
 
         return ruletka.ResultGame();
-    }
+    } */
 
     [HttpPost("EnterValueColor")]
     public string EnterValueColor(int value, string color, int idPlayer)
     {
 
-        var player = players.SingleOrDefault(p => p.Id == idPlayer);
+       Players player = players.SingleOrDefault(p => p.Id == idPlayer);
 
+        Ruletka ruletka = new Ruletka();
 
+        string result = ResultGame(ruletka, value, color, player);
 
         return "Ваша ставка записана";
     }
