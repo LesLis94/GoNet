@@ -26,6 +26,13 @@ public class WeatherForecastController : ControllerBase
 
     private int NextPlayersId => players.Count() == 0 ? 1 : players.Max(x => x.Id) + 1;
 
+    private readonly IRoulette _roulette;
+
+    public WeatherForecastController(IRoulette roulette)
+    {
+        _roulette = roulette;
+    }
+
     [HttpGet("ListPlayers")]
     public IEnumerable<Players> GetPlayers() => players;
 
@@ -45,7 +52,7 @@ public class WeatherForecastController : ControllerBase
 
 
 
-   private string ResultGame(IRoulette roulette, int value, string color, Players player) => roulette.ResultGame(value, color, player);
+   //private string ResultGame(IRoulette roulette, int value, string color, Players player) => roulette.ResultGame(value, color, player);
 
    /* [HttpGet("resultGame")]
     public string GetInt()
@@ -62,11 +69,12 @@ public class WeatherForecastController : ControllerBase
 
        Players player = players.SingleOrDefault(p => p.Id == idPlayer);
 
-        Ruletka ruletka = new Ruletka();
+        //Ruletka ruletka = new Ruletka();
 
-        string result = ResultGame(ruletka, value, color, player);
+      //  string result = ResultGame(ruletka, value, color, player);
+        string result = _roulette.ResultGame(value, color, player);
 
-        return "Ваша ставка записана";
+        return "Ваша ставка записана. " + result;
     }
 
 }

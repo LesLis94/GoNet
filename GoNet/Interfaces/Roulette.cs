@@ -12,7 +12,7 @@ namespace GoNet.Interfaces
         /// <param name="colorP"></param>
         /// <param name="player"></param>
         /// <returns></returns>
-        string ResultGame(int valueP, string colorP, Players player);
+        string ResultGame(int value, string color, Players player);
 
     }
 }

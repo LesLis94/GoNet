@@ -6,6 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped <IRoulette, Ruletka>();
 
+/* AddSingeton - пока наше приложение работает, будет возвращать один и тот же экземпляр
+ * AddScoped - запрос - новый экземпляр
+ * AddTransient - создает каждый раз экземпляр при обращении к нему
+ */
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
