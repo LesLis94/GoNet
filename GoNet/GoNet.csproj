@@ -24,7 +24,7 @@
     <None Remove="Models\BL\Services\" />
     <None Remove="Models\BL\Services\Abstract\" />
     <None Remove="Models\DAL\Controllers\" />
-    <None Remove="Models\BL\Services\Interfaces\" />
+    <None Remove="Models\BL\Services\Abstract\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -34,6 +34,6 @@
     <Folder Include="Models\BL\Services\" />
     <Folder Include="Models\BL\Services\Abstract\" />
     <Folder Include="Models\DAL\Controllers\" />
-    <Folder Include="Models\BL\Services\Interfaces\" />
+    <Folder Include="Models\BL\Services\Abstract\Interfaces\" />
   </ItemGroup>
 </Project>
