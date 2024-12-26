@@ -17,11 +17,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Class\" />
-    <None Remove="Interfaces\" />
+    <None Remove="Models\" />
+    <None Remove="Models\BL\" />
+    <None Remove="Models\DAL\" />
+    <None Remove="Models\DataBase\" />
+    <None Remove="Models\BL\Services\" />
+    <None Remove="Models\BL\Services\Abstract\" />
+    <None Remove="Models\DAL\Controllers\" />
+    <None Remove="Models\BL\Services\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Class\" />
-    <Folder Include="Interfaces\" />
+    <Folder Include="Models\" />
+    <Folder Include="Models\BL\" />
+    <Folder Include="Models\DAL\" />
+    <Folder Include="Models\DataBase\" />
+    <Folder Include="Models\BL\Services\" />
+    <Folder Include="Models\BL\Services\Abstract\" />
+    <Folder Include="Models\DAL\Controllers\" />
+    <Folder Include="Models\BL\Services\Interfaces\" />
   </ItemGroup>
 </Project>
