@@ -4,14 +4,15 @@ using System.Reflection.Metadata;
 using GoNet.BL.Services.Abstract;
 using Microsoft.EntityFrameworkCore;
 
-namespace GoNet.DAL.Abstract
+
+namespace GoNet.DAL
 {
-    public class PlayersContext : DbContext
+    public class DBContext1 : DbContext
     {
 
         public DbSet<Players> Players { get; set; } = null!;
 
-        public PlayersContext()
+        public DBContext1()
         {
             Database.EnsureDeleted();
             Database.EnsureCreated();
@@ -23,5 +24,6 @@ namespace GoNet.DAL.Abstract
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Casino;Username=postgres;Password=LesLis");
         }
 
+       
     }
 }

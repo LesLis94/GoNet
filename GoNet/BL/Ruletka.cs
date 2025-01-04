@@ -6,8 +6,8 @@ namespace GoNet.BL
 {
     public class Ruletka : IRoulette
     {
-        public Random random = new Random();
-        public string[] colors = new string[] { "красное", "черное" };
+        private Random random = new Random();
+        private string[] colors = new string[] { "красное", "черное" };
 
 
 

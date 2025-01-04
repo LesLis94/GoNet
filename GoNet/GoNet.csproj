@@ -29,6 +29,7 @@
     <None Remove="BL\Services\Abstract\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DAL\Abstract\" />
     <Folder Include="Models\" />
     <Folder Include="PL\" />
     <Folder Include="Models\DataBase\" />

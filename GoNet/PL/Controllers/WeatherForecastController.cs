@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Numerics;
 using GoNet.BL.Services.Abstract;
 using GoNet.BL.Services.Abstract.Interfaces;
-using GoNet.DAL.Abstract;
+
 
 namespace GoNet.DAL.Controllers;
 
@@ -23,20 +23,21 @@ public class WeatherForecastController : ControllerBase
         _logger = logger;
     } */
 
-    private static List<Players> players = new List<Players>();
+    // private static List<Players> players = new List<Players>();
 
-   // private int NextPlayersId => players.Count() == 0 ? 1 : players.Max(x => x.Id) + 1;
+    // private int NextPlayersId => players.Count() == 0 ? 1 : players.Max(x => x.Id) + 1;
+
+
 
     private readonly IRoulette _roulette;
+    
 
     public WeatherForecastController(IRoulette roulette)
     {
         _roulette = roulette;
     }
 
-    [HttpGet("ListPlayers")]
-    public IEnumerable<Players> GetPlayers() => players;
-
+    /*
     [HttpPost("WritePlayer")]
     public IActionResult PostSavePlayer(Players player)
     {
@@ -49,7 +50,7 @@ public class WeatherForecastController : ControllerBase
        player.Id = Guid.NewGuid();
         players.Add(player);
         return Ok();
-    }
+    } */
 
     [HttpPost ("SaveDBPlayer")]
     public IActionResult PostSaveDBPlayer(Players player)
@@ -60,7 +61,7 @@ public class WeatherForecastController : ControllerBase
         }
 
         player.Id = Guid.NewGuid();
-        using (var db = new PlayersContext())
+        using (var db = new DBContext1())
         {
             db.Players.Add(player);
             db.SaveChanges();
@@ -69,7 +70,37 @@ public class WeatherForecastController : ControllerBase
         }
     }
 
+    [HttpGet("ListPlayers")]
+    public IEnumerable<Players> GetPlayers()
+    {
 
+        using (var db = new DBContext1())
+        {
+
+            var player = db.Players.ToList();
+
+            return player;
+        }
+    }
+
+    [HttpGet ("StatusPlayer")]
+    public IEnumerable<Players> GetStatusPlayer(Guid guid)
+    {
+
+        using (var db = new DBContext1())
+        {
+
+            Players player = db.Players.Find(guid);
+            yield return player;
+        }
+    }
+
+    [HttpDelete ("Exit")]
+    public IActionResult ExitPlayer()
+    {
+
+        return Ok();
+    }
 
     [HttpPost("EnterValueColor")]
     public string EnterValueColor(int value, string color, int idPlayer)

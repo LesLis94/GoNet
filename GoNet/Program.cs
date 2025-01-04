@@ -1,11 +1,14 @@
 ﻿using GoNet.BL;
 using GoNet.BL.Services.Abstract.Interfaces;
+using GoNet.DAL;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped <IRoulette, Ruletka>();
+
 
 /* AddSingeton - пока наше приложение работает, будет возвращать один и тот же экземпляр
  * AddScoped - запрос - новый экземпляр
