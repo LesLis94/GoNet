@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using GoNet.Class;
-using GoNet.Interfaces;
 using System.Drawing;
 using System.Numerics;
+using GoNet.BL.Services.Abstract;
+using GoNet.BL.Services.Abstract.Interfaces;
+using GoNet.DAL.Abstract;
 
-namespace GoNet.Controllers;
+namespace GoNet.DAL.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -24,7 +25,7 @@ public class WeatherForecastController : ControllerBase
 
     private static List<Players> players = new List<Players>();
 
-    private int NextPlayersId => players.Count() == 0 ? 1 : players.Max(x => x.Id) + 1;
+   // private int NextPlayersId => players.Count() == 0 ? 1 : players.Max(x => x.Id) + 1;
 
     private readonly IRoulette _roulette;
 
@@ -44,37 +45,46 @@ public class WeatherForecastController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        player.Id = NextPlayersId;
+       // player.Id = NextPlayersId;
+       player.Id = Guid.NewGuid();
         players.Add(player);
         return Ok();
     }
 
-
-
-
-   //private string ResultGame(IRoulette roulette, int value, string color, Players player) => roulette.ResultGame(value, color, player);
-
-   /* [HttpGet("resultGame")]
-    public string GetInt()
+    [HttpPost ("SaveDBPlayer")]
+    public IActionResult PostSaveDBPlayer(Players player)
     {
-        //Ruletka.resultGame();
-        Ruletka ruletka = new Ruletka();
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
-        return ruletka.ResultGame();
-    } */
+        player.Id = Guid.NewGuid();
+        using (var db = new PlayersContext())
+        {
+            db.Players.Add(player);
+            db.SaveChanges();
+
+            return Ok();
+        }
+    }
+
+
 
     [HttpPost("EnterValueColor")]
     public string EnterValueColor(int value, string color, int idPlayer)
     {
 
-       Players player = players.SingleOrDefault(p => p.Id == idPlayer);
+        /* Players player = players.SingleOrDefault(p => p.Id == idPlayer);
 
-        //Ruletka ruletka = new Ruletka();
+         //Ruletka ruletka = new Ruletka();
 
-      //  string result = ResultGame(ruletka, value, color, player);
-        string result = _roulette.ResultGame(value, color, player);
+         //  string result = ResultGame(ruletka, value, color, player);
+         string result = _roulette.ResultGame(value, color, player);
 
-        return "Ваша ставка записана. " + result;
+         return "Ваша ставка записана. " + result;
+        */
+        return "Ваша ставка записана. ";
     }
 
 }

@@ -1,10 +1,10 @@
 ﻿using System;
-using GoNet.Class;
+using GoNet.BL.Services.Abstract;
 
-namespace GoNet.Interfaces
+namespace GoNet.BL.Services.Abstract.Interfaces
 {
-	public interface IRoulette
-	{
+    public interface IRoulette
+    {
         /// <summary>
         /// Отдаем в класс рулетка
         /// </summary>

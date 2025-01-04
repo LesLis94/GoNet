@@ -1,5 +1,6 @@
-﻿using GoNet.Class;
-using GoNet.Interfaces;
+﻿using GoNet.BL;
+using GoNet.BL.Services.Abstract.Interfaces;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
