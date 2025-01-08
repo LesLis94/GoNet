@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Numerics;
 using GoNet.BL.Services.Abstract;
 using GoNet.BL.Services.Abstract.Interfaces;
+using GoNet.Models;
 
 
 namespace GoNet.DAL.Controllers;
@@ -61,7 +62,7 @@ public class WeatherForecastController : ControllerBase
         }
 
         player.Id = Guid.NewGuid();
-        using (var db = new DBContext1())
+        using (var db = new DataContext())
         {
             db.Players.Add(player);
             db.SaveChanges();
@@ -74,7 +75,7 @@ public class WeatherForecastController : ControllerBase
     public IEnumerable<Players> GetPlayers()
     {
 
-        using (var db = new DBContext1())
+        using (var db = new DataContext())
         {
 
             var player = db.Players.ToList();
@@ -87,7 +88,7 @@ public class WeatherForecastController : ControllerBase
     public IEnumerable<Players> GetStatusPlayer(Guid guid)
     {
 
-        using (var db = new DBContext1())
+        using (var db = new DataContext())
         {
 
             Players player = db.Players.Find(guid);

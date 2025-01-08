@@ -1,29 +1,35 @@
 ﻿//using System.Data.Entity;
-using Microsoft.Extensions.Hosting;
-using System.Reflection.Metadata;
 using GoNet.BL.Services.Abstract;
+using GoNet.Configurations;
 using Microsoft.EntityFrameworkCore;
+//using System.Data.Entity;
 
 
-namespace GoNet.DAL
+namespace GoNet.Models
 {
-    public class DBContext1 : DbContext
+    public class DataContext : DbContext
     {
 
-        public DbSet<Players> Players { get; set; } = null!;
+        public DbSet<Players> Players { get; set; }
 
-        public DBContext1()
+        public DataContext()
         {
             Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new PlayerConfiguration());
+
+            base.OnModelCreating(modelBuilder);
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Casino;Username=postgres;Password=LesLis");
         }
 
-       
+
     }
 }

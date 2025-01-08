@@ -1,14 +1,18 @@
 ﻿using GoNet.BL;
 using GoNet.BL.Services.Abstract.Interfaces;
-using GoNet.DAL;
+using GoNet.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddScoped <IRoulette, Ruletka>();
+// Add services to the container.net
+// регаем зависимости
+builder.Services.AddScoped<IRoulette, Ruletka>();
 
+// регаем базу
+builder.Services.AddDbContext<DataContext>();
 
 /* AddSingeton - пока наше приложение работает, будет возвращать один и тот же экземпляр
  * AddScoped - запрос - новый экземпляр

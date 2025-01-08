@@ -1,4 +1,4 @@
-﻿namespace GoNet;
+﻿namespace GoNet.WebApi;
 
 public class WeatherForecast
 {
