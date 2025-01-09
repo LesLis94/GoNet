@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
 using System.Numerics;
-using GoNet.BL.Services.Abstract;
-using GoNet.BL.Services.Abstract.Interfaces;
-using GoNet.Models;
+using GoNet.BusinessLogic.Services.Abstract;
+using GoNet.Core.Models;
+using GoNet.WebApi.Contracts;
 
 
 namespace GoNet.DAL.Controllers;
@@ -31,11 +31,13 @@ public class WeatherForecastController : ControllerBase
 
 
     private readonly IRoulette _roulette;
-    
+    private readonly IPlayersService _playersService1;
 
-    public WeatherForecastController(IRoulette roulette)
+
+    public WeatherForecastController(IRoulette roulette, IPlayersService playersService)
     {
         _roulette = roulette;
+        _playersService1 = playersService;
     }
 
     /*
@@ -54,36 +56,37 @@ public class WeatherForecastController : ControllerBase
     } */
 
     [HttpPost ("SaveDBPlayer")]
-    public IActionResult PostSaveDBPlayer(Players player)
+    public async Task<ActionResult<Guid>> PostSaveDBPlayer(PlayerRequest request)
     {
-        if (!ModelState.IsValid)
+       
+
+        var (player, error) = Player.Create(
+            Guid.NewGuid(),
+            request.name,
+            100);
+
+        /*if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
-        }
+        } */
 
-        player.Id = Guid.NewGuid();
-        using (var db = new DataContext())
-        {
-            db.Players.Add(player);
-            db.SaveChanges();
+        var playerId = await _playersService1.CreatePlayer(player);
 
-            return Ok();
-        }
+        return Ok(playerId);
+        
     }
 
     [HttpGet("ListPlayers")]
-    public IEnumerable<Players> GetPlayers()
+    public async Task<ActionResult<List<PlayerResponse>>> GetPlayers()
     {
 
-        using (var db = new DataContext())
-        {
+        var players = await _playersService1.GetAllPlayers();
+        var response = players.Select(p => new PlayerResponse(p.Id, p.Name, p.Cash));
 
-            var player = db.Players.ToList();
-
-            return player;
-        }
+        return Ok(response);
     }
 
+    /*
     [HttpGet ("StatusPlayer")]
     public IEnumerable<Players> GetStatusPlayer(Guid guid)
     {
@@ -95,6 +98,8 @@ public class WeatherForecastController : ControllerBase
             yield return player;
         }
     }
+
+    */
 
     [HttpDelete ("Exit")]
     public IActionResult ExitPlayer()

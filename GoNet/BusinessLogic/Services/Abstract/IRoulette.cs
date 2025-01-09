@@ -1,7 +1,7 @@
 ﻿using System;
-using GoNet.BL.Services.Abstract;
+using GoNet.Core.Models;
 
-namespace GoNet.BL.Services.Abstract.Interfaces
+namespace GoNet.BusinessLogic.Services.Abstract
 {
     public interface IRoulette
     {
@@ -12,7 +12,7 @@ namespace GoNet.BL.Services.Abstract.Interfaces
         /// <param name="colorP"></param>
         /// <param name="player"></param>
         /// <returns></returns>
-        string ResultGame(int value, string color, Players player);
+        string ResultGame(int value, string color, Player player);
 
     }
 }

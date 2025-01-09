@@ -1,6 +1,6 @@
 ﻿using System;
-using GoNet.BL.Services.Abstract;
-using GoNet.BL.Services.Abstract.Interfaces;
+using GoNet.BusinessLogic.Services.Abstract;
+using GoNet.Core.Models;
 
 namespace GoNet.BL
 {
@@ -11,7 +11,7 @@ namespace GoNet.BL
 
 
 
-        public string ResultGame(int valueP, string colorP, Players player)
+        public string ResultGame(int valueP, string colorP, Player player)
         {
 
             int value = ResultValue();

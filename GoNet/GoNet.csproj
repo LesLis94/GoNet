@@ -9,12 +9,6 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
-    <Compile Remove="Models\DataBase\**" />
-    <Content Remove="Models\DataBase\**" />
-    <EmbeddedResource Remove="Models\DataBase\**" />
-    <None Remove="Models\DataBase\**" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
@@ -36,15 +30,12 @@
 
   <ItemGroup>
     <None Remove="Models\" />
-    <None Remove="Models\BL\" />
-    <None Remove="Models\DAL\" />
-    <None Remove="Models\DataBase\" />
     <None Remove="BusinessLogic\Services\" />
     <None Remove="BusinessLogic\Services\Abstract\" />
     <None Remove="WebApi\Controllers\" />
     <None Remove="BusinessLogic\Services\Abstract\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataAccess\Abstract\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>
