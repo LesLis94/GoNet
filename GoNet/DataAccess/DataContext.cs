@@ -13,22 +13,30 @@ namespace GoNet.DataAccess
         public DbSet<PlayerEntity> Players { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
-            : base(options)
-        {
-            // Database.EnsureDeleted();
-            //Database.EnsureCreated();
-        }
+             : base(options)
+         {
+             // Database.EnsureDeleted();
+             //Database.EnsureCreated();
+         }
+        
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        /* public DataContext()
+        {
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
+        } */
+
+         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new PlayerConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
+        
 
         /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
          {
-             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Casino3;Username=postgres;Password=LesLis");
+             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Casino4;Username=postgres;Password=LesLis");
          } */
 
 

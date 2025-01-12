@@ -19,7 +19,8 @@ builder.Services.AddScoped<IRepositoryPlayer, Repository>();
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString(nameof(DataContext)));
-});
+}); 
+//builder.Services.AddDbContext<DataContext>();
 
 /* AddSingeton - пока наше приложение работает, будет возвращать один и тот же экземпляр
  * AddScoped - запрос - новый экземпляр

@@ -1,7 +1,8 @@
-﻿using System.Data.Entity;
+﻿//using System.Data.Entity;
 using GoNet.BL.Services.Abstract;
 using GoNet.Core.Abstract;
 using GoNet.Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoNet.DataAccess
 {
@@ -18,7 +19,7 @@ namespace GoNet.DataAccess
         public async Task<List<Player>> GetPlayers()
         {
             var playersEntity = await _dbcontext.Players
-               // .AsNoTracking() 
+                .AsNoTracking() 
                 .ToListAsync();
 
             //.AsNoTracking() // отключает лишнее отслеживание
