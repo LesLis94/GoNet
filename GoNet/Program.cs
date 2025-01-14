@@ -3,6 +3,7 @@ using GoNet.BusinessLogic.Services;
 using GoNet.BusinessLogic.Services.Abstract;
 using GoNet.Core.Abstract;
 using GoNet.DataAccess;
+using GoNet.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -13,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // регаем зависимости
 builder.Services.AddScoped<IRoulette, Ruletka>();
 builder.Services.AddScoped<IPlayersService, PlayersService>();
-builder.Services.AddScoped<IRepositoryPlayer, Repository>();
+builder.Services.AddScoped<IRepositoryPlayer, RepositoryPlayer>();
 
 // регаем базу
 builder.Services.AddDbContext<DataContext>(options =>
@@ -41,6 +42,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// подключаем слушатель ошибок
+app.UseMiddleware<ExeptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

@@ -19,5 +19,20 @@ namespace GoNet.BusinessLogic.Services
         {
             return await _repositoryPlayer.Create(player);
         }
+
+        public async Task<Player> GetPlayerInfo(Guid id)
+        {
+            return await _repositoryPlayer.GetPlayerInfo(id);
+        }
+
+        public async Task Update(Guid id, int cash)
+        {
+            await _repositoryPlayer.Update(id, cash);
+        }
+
+        public async Task Delete(Guid id)
+        {
+            await _repositoryPlayer.Delete(id);
+        }
     }
 }

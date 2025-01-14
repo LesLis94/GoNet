@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoNet.DataAccess
 {
-    public class Repository : IRepositoryPlayer
+    public class RepositoryPlayer : IRepositoryPlayer
     {
 
         private readonly DataContext _dbcontext;
 
-        public Repository(DataContext dbcontext)
+        public RepositoryPlayer(DataContext dbcontext)
         {
             _dbcontext = dbcontext;
         }
@@ -31,6 +31,19 @@ namespace GoNet.DataAccess
             return players;
         }
 
+        public async Task<Player> GetPlayerInfo(Guid id)
+        {
+            var playersEntity = await _dbcontext.Players
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == id) ?? throw new Exception($"Player not found");
+
+            //.FirstOrDefaultAsync() // вернет первый найденный по условию
+
+            var player = Player.Create(playersEntity.Id, playersEntity.Name, playersEntity.Cash).Player;
+
+            return player;
+        }
+
         public async Task<Guid> Create(Player player)
         {
             var playerEntity = new PlayerEntity
@@ -44,6 +57,17 @@ namespace GoNet.DataAccess
             await _dbcontext.SaveChangesAsync();
 
             return playerEntity.Id;
+        }
+
+        public async Task Update(Guid id, int cash)
+        {
+            await _dbcontext.Players.Where(p => p.Id == id).ExecuteUpdateAsync(s => s
+                .SetProperty(c => c.Cash, cash));
+        }
+
+        public async Task Delete(Guid id)
+        {
+            await _dbcontext.Players.Where(p => p.Id == id).ExecuteDeleteAsync();
         }
 
     }

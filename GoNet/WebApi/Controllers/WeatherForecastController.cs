@@ -31,13 +31,14 @@ public class WeatherForecastController : ControllerBase
 
 
     private readonly IRoulette _roulette;
-    private readonly IPlayersService _playersService1;
+    private readonly IPlayersService _playersService;
+    private readonly ILogger<WeatherForecastController> _logger;
 
-
-    public WeatherForecastController(IRoulette roulette, IPlayersService playersService)
+    public WeatherForecastController(IRoulette roulette, IPlayersService playersService, ILogger<WeatherForecastController> logger)
     {
         _roulette = roulette;
-        _playersService1 = playersService;
+        _playersService = playersService;
+        _logger = logger;
     }
 
     /*
@@ -70,7 +71,7 @@ public class WeatherForecastController : ControllerBase
             return BadRequest(ModelState);
         } */
 
-        var playerId = await _playersService1.CreatePlayer(player);
+        var playerId = await _playersService.CreatePlayer(player);
 
         return Ok(playerId);
         
@@ -80,7 +81,7 @@ public class WeatherForecastController : ControllerBase
     public async Task<ActionResult<List<PlayerResponse>>> GetPlayers()
     {
 
-        var players = await _playersService1.GetAllPlayers();
+        var players = await _playersService.GetAllPlayers();
         var response = players.Select(p => new PlayerResponse(p.Id, p.Name, p.Cash));
 
         return Ok(response);
