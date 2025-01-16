@@ -1,5 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Policy;
+using GoNet.BusinessLogic.Services;
+using GoNet.BusinessLogic.Services.Abstract;
 using GoNet.DataAccess.Abstract;
 
 namespace GoNet.Core.Models
@@ -41,17 +44,16 @@ namespace GoNet.Core.Models
             return (player, error);
         }
 
-        public void GiveMoney(int bid)
+        public async void GiveMoney(int bid)
         {
             if (bid > Cash)
             {
                 throw new Exception($"No money");
             }
-
             Cash -= bid;
         }
 
-        public void PutMoney(int money)
+        public async void PutMoney(int money)
         {
             Cash += money;
         }

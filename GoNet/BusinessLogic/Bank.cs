@@ -2,7 +2,7 @@
 
 namespace GoNet.BusinessLogic
 {
-    public class Bank
+    public class Bank : IBank
     {
         static Random random = new Random();
         public IThingsPlayersService _thingsPlayersService;

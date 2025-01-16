@@ -12,8 +12,7 @@ namespace GoNet.BusinessLogic.Services.Abstract
         /// <param name="colorP"></param>
         /// <param name="player"></param>
         /// <returns></returns>
-        string ResultGame(int value, string color, Player player);
-
+        string ResultGame(int valueP, string colorP, Player player, int bid);
     }
 }
 

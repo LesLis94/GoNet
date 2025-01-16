@@ -3,5 +3,5 @@ using GoNet.Core.Models;
 
 namespace GoNet.WebApi.Contracts
 {
-        public record ThingPlayerResponse(string name);
+        public record ThingPlayerResponse(Guid id, string name);
 }

@@ -1,4 +1,5 @@
-﻿using GoNet.BusinessLogic.Services.Abstract;
+﻿using System.Security.Policy;
+using GoNet.BusinessLogic.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,19 +19,18 @@ namespace GoNet.WebApi.Controllers
         }
 
         [HttpPost("EnterValueColor")]
-        public string EnterValueColor(int value, string color, int idPlayer)
+        public async Task<ActionResult<string>> EnterValueColor(int value, string color, Guid idPlayer, int bid)
         {
 
-            /* Players player = players.SingleOrDefault(p => p.Id == idPlayer);
+            var player = await _playersService.GetPlayerInfo(idPlayer);
+            if (player.Cash < bid) return BadRequest($"Cash is small");
 
-             //Ruletka ruletka = new Ruletka();
+            string result = _roulette.ResultGame(value, color, player, bid);
+            await _playersService.Update(idPlayer, player.Cash);
 
-             //  string result = ResultGame(ruletka, value, color, player);
-             string result = _roulette.ResultGame(value, color, player);
-
-             return "Ваша ставка записана. " + result;
-            */
-            return "Ваша ставка записана. ";
+            return "Ваша ставка записана. " + result;
+            
+            //return "Ваша ставка записана. ";
         }
 
     }

@@ -11,16 +11,25 @@ namespace GoNet.BL
 
 
 
-        public string ResultGame(int valueP, string colorP, Player player)
+        public string ResultGame(int valueP, string colorP, Player player, int bid)
         {
 
             int value = ResultValue();
             string color = ResultColor();
 
-
+            if (String.Equals(color, colorP, StringComparison.OrdinalIgnoreCase))
+            {
+                if (value == valueP)
+                {
+                    int money = bid * 2;
+                    player.PutMoney(money);
+                    return $"{value} {color} {money}";
+                }
+            }
 
             //return Convert.ToString(value + " " + color);
-            return $"{value} {color}";
+            player.GiveMoney(bid);
+            return $"{value} {color} -{bid}";
         }
 
         public int ResultValue()

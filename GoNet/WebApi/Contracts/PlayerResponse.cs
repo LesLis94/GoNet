@@ -22,7 +22,7 @@ namespace GoNet.WebApi.Contracts
             Name = name;
             foreach (ThingPlayer thing in things)
             {
-                Things.Add(new ThingPlayerResponse(thing.Name));
+                Things.Add(new ThingPlayerResponse(thing.Id, thing.Name));
             }
         }
     };

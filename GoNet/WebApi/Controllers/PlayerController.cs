@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using GoNet.BusinessLogic.Services.Abstract;
 using GoNet.Core.Models;
 using GoNet.WebApi.Contracts;
+using GoNet.BusinessLogic;
+using System.Security.Policy;
 
 namespace GoNet.WebApi.Controllers
 {
@@ -12,11 +14,13 @@ namespace GoNet.WebApi.Controllers
     {
         private readonly IRoulette _roulette;
         private readonly IPlayersService _playersService;
+        private readonly IBank _bank;
 
-        public PlayerController(IRoulette roulette, IPlayersService playersService)
+        public PlayerController(IRoulette roulette, IPlayersService playersService, IBank bank)
         {
             _roulette = roulette;
             _playersService = playersService;
+            _bank = bank;
         }
 
         [HttpPost("SaveDBPlayer")]
@@ -65,6 +69,16 @@ namespace GoNet.WebApi.Controllers
         {
             await _playersService.Delete(id);
             return Ok();
+        }
+
+        [HttpPost("SaleThing")]
+        public async Task<ActionResult> SaleThing(Guid id, Guid idThing)
+        {
+            var player = await _playersService.GetPlayerInfo(id);
+            player.Cash += (int)_bank.SaleThingPlayer(idThing);
+            await _playersService.Update(id, player.Cash);
+
+            return Ok(player.Cash);
         }
     }
 }

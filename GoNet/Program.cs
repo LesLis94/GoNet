@@ -1,4 +1,5 @@
 ﻿using GoNet.BL;
+using GoNet.BusinessLogic;
 using GoNet.BusinessLogic.Services;
 using GoNet.BusinessLogic.Services.Abstract;
 using GoNet.Core.Abstract;
@@ -17,6 +18,7 @@ builder.Services.AddScoped<IPlayersService, PlayersService>();
 builder.Services.AddScoped<IRepositoryPlayer, RepositoryPlayer>();
 builder.Services.AddScoped<IThingsPlayersService, ThingsPlayersService>();
 builder.Services.AddScoped<IRepositoryThingPlayer, RepositoryThingPlayer>();
+builder.Services.AddScoped<IBank, Bank>();
 
 // регаем базу
 builder.Services.AddDbContext<DataContext>(options =>
