@@ -1,5 +1,6 @@
 ﻿//using System.Data.Entity;
 using GoNet.BL.Services.Abstract;
+using GoNet.DataAccess.Abstract;
 using GoNet.DataAccess.Configurations;
 using Microsoft.EntityFrameworkCore;
 //using System.Data.Entity;
@@ -11,6 +12,7 @@ namespace GoNet.DataAccess
     {
 
         public DbSet<PlayerEntity> Players { get; set; }
+        public DbSet<ThingPlayerEntity> Things { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
              : base(options)

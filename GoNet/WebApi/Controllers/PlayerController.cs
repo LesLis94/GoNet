@@ -8,12 +8,12 @@ namespace GoNet.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Casino : ControllerBase
+    public class PlayerController : ControllerBase
     {
         private readonly IRoulette _roulette;
         private readonly IPlayersService _playersService;
 
-        public Casino (IRoulette roulette, IPlayersService playersService)
+        public PlayerController(IRoulette roulette, IPlayersService playersService)
         {
             _roulette = roulette;
             _playersService = playersService;
@@ -23,7 +23,7 @@ namespace GoNet.WebApi.Controllers
         public async Task<ActionResult<Guid>> PostSaveDBPlayer(PlayerRequest request)
         {
 
-            var (player, error) = Player.Create(
+            var (player, error) = Player.CreateNew(
                 Guid.NewGuid(),
                 request.name,
                 100);
@@ -32,6 +32,13 @@ namespace GoNet.WebApi.Controllers
 
             return Ok(playerId);
 
+        }
+
+        [HttpPatch("UpdatePlayer")]
+        public async Task<ActionResult> UpdatePlayer(Guid id, int cash)
+        {
+            await _playersService.Update(id, cash);
+            return Ok(id);
         }
 
         [HttpGet("ListPlayers")]
@@ -48,7 +55,7 @@ namespace GoNet.WebApi.Controllers
         public async Task<PlayerInfo> GetInfoPlayer(Guid id)
         {
             var player = await _playersService.GetPlayerInfo(id);
-            var response = new PlayerInfo(player.Name, player.Cash);
+            var response = new PlayerInfo(player.Name, player.Cash, player.Things);
 
             return response;
         }

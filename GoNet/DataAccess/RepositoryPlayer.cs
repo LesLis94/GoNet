@@ -2,6 +2,7 @@
 using GoNet.BL.Services.Abstract;
 using GoNet.Core.Abstract;
 using GoNet.Core.Models;
+using GoNet.DataAccess.Abstract;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoNet.DataAccess
@@ -35,11 +36,16 @@ namespace GoNet.DataAccess
         {
             var playersEntity = await _dbcontext.Players
                 .AsNoTracking()
+                .Include(p => p.Things)
                 .FirstOrDefaultAsync(p => p.Id == id) ?? throw new Exception($"Player not found");
 
             //.FirstOrDefaultAsync() // вернет первый найденный по условию
-
             var player = Player.Create(playersEntity.Id, playersEntity.Name, playersEntity.Cash).Player;
+
+            foreach (ThingPlayerEntity thing in playersEntity.Things)
+            {
+                player.Things.Add(new ThingPlayer ( thing.Id, thing.Name, thing.IdPlayer, player ));
+            }
 
             return player;
         }
@@ -53,7 +59,16 @@ namespace GoNet.DataAccess
                 Cash = player.Cash
             };
 
+            foreach (ThingPlayer thing in player.Things)
+            {
+                playerEntity.Things.Add(new ThingPlayerEntity { Id = thing.Id, Name = thing.Name, IdPlayer = thing.IdPlayer, Player = playerEntity});
+            }
+
             await _dbcontext.Players.AddAsync(playerEntity);
+            foreach (ThingPlayerEntity thing in playerEntity.Things)
+            {
+                await _dbcontext.Things.AddAsync(thing);
+            }
             await _dbcontext.SaveChangesAsync();
 
             return playerEntity.Id;

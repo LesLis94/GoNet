@@ -15,6 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IRoulette, Ruletka>();
 builder.Services.AddScoped<IPlayersService, PlayersService>();
 builder.Services.AddScoped<IRepositoryPlayer, RepositoryPlayer>();
+builder.Services.AddScoped<IThingsPlayersService, ThingsPlayersService>();
+builder.Services.AddScoped<IRepositoryThingPlayer, RepositoryThingPlayer>();
 
 // регаем базу
 builder.Services.AddDbContext<DataContext>(options =>
