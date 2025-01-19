@@ -1,4 +1,5 @@
-﻿using GoNet.BusinessLogic.Services.Abstract;
+﻿using System.Security.Policy;
+using GoNet.BusinessLogic.Services.Abstract;
 using GoNet.Core.Abstract;
 using GoNet.Core.Models;
 
@@ -33,6 +34,20 @@ namespace GoNet.BusinessLogic.Services
         public async Task Delete(Guid id)
         {
             await _repositoryPlayer.Delete(id);
+        }
+
+        public async void GiveMoney(int bid, Player player)
+        {
+            if (bid > player.Cash)
+            {
+                throw new Exception($"No money");
+            }
+            player.Cash -= bid;
+        }
+
+        public async void PutMoney(int money, Player player)
+        {
+            player.Cash += money;
         }
     }
 }

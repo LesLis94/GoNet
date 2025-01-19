@@ -9,7 +9,12 @@ namespace GoNet.BL
         private Random random = new Random();
         private string[] colors = new string[] { "красное", "черное" };
 
+        public readonly IPlayersService _playersService;
 
+        public Ruletka(IPlayersService playersService)
+        {
+            _playersService = playersService;
+        }
 
         public string ResultGame(int valueP, string colorP, Player player, int bid)
         {
@@ -22,13 +27,15 @@ namespace GoNet.BL
                 if (value == valueP)
                 {
                     int money = bid * 2;
-                    player.PutMoney(money);
+                    _playersService.PutMoney(money, player);
+                   // player.PutMoney(money);
                     return $"{value} {color} {money}";
                 }
             }
 
             //return Convert.ToString(value + " " + color);
-            player.GiveMoney(bid);
+            //player.GiveMoney(bid);
+            _playersService.GiveMoney(bid, player);
             return $"{value} {color} -{bid}";
         }
 

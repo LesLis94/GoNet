@@ -14,13 +14,14 @@ namespace GoNet.Core.Models
         // делает поле обязательным
         [Required]
         public string Name { get; set; }
-        public List<ThingPlayer> Things { get; set; } = [];
+        public List<ThingPlayer> Things { get; set; }
 
-        private Player(Guid id, string name, int cash)
+        public Player(Guid id, string name, int cash)
         {
             Id = id;
             Name = name;
             Cash = cash;
+            Things = new List<ThingPlayer>();
         }
 
         public static (Player Player, string Error) CreateNew(Guid id, string name, int cash)
@@ -36,27 +37,7 @@ namespace GoNet.Core.Models
             return (player, error);
         }
 
-        public static (Player Player, string Error) Create(Guid id, string name, int cash)
-        {
-            var error = string.Empty;
-            var player = new Player(id, name, cash);
-
-            return (player, error);
-        }
-
-        public async void GiveMoney(int bid)
-        {
-            if (bid > Cash)
-            {
-                throw new Exception($"No money");
-            }
-            Cash -= bid;
-        }
-
-        public async void PutMoney(int money)
-        {
-            Cash += money;
-        }
+        
     }
 }
 

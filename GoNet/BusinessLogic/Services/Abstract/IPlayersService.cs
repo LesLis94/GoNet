@@ -9,5 +9,7 @@ namespace GoNet.BusinessLogic.Services.Abstract
         Task Delete(Guid id);
         Task<List<Player>> GetAllPlayers();
         Task Update(Guid id, int cash);
+        void GiveMoney(int bid, Player player);
+        void PutMoney(int money, Player player);
     }
 }

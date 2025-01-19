@@ -3,6 +3,7 @@ using GoNet.BL.Services.Abstract;
 using GoNet.Core.Abstract;
 using GoNet.Core.Models;
 using GoNet.DataAccess.Abstract;
+using GoNet.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoNet.DataAccess
@@ -26,7 +27,7 @@ namespace GoNet.DataAccess
             //.AsNoTracking() // отключает лишнее отслеживание
 
             var players = playersEntity
-                .Select(p => Player.Create(p.Id, p.Name, p.Cash).Player)
+                .Select(p => new Player(p.Id, p.Name, p.Cash))
                 .ToList();
 
             return players;
@@ -40,29 +41,31 @@ namespace GoNet.DataAccess
                 .FirstOrDefaultAsync(p => p.Id == id) ?? throw new Exception($"Player not found");
 
             //.FirstOrDefaultAsync() // вернет первый найденный по условию
-            var player = Player.Create(playersEntity.Id, playersEntity.Name, playersEntity.Cash).Player;
+            var player = new Player(playersEntity.Id, playersEntity.Name, playersEntity.Cash);
 
-            foreach (ThingPlayerEntity thing in playersEntity.Things)
-            {
-                player.Things.Add(new ThingPlayer ( thing.Id, thing.Name, thing.IdPlayer, player ));
-            }
+            player.Things = playersEntity.Things
+                .Select(pT => new ThingPlayer(pT.Id, pT.Name, pT.IdPlayer, player))
+                .ToList();
 
             return player;
         }
 
         public async Task<Guid> Create(Player player)
         {
-            var playerEntity = new PlayerEntity
-            {
-                Id = player.Id,
-                Name = player.Name,
-                Cash = player.Cash
-            };
+            /* var playerEntity = new PlayerEntity
+             {
+                 Id = player.Id,
+                 Name = player.Name,
+                 Cash = player.Cash
+             }; */
 
-            foreach (ThingPlayer thing in player.Things)
-            {
-                playerEntity.Things.Add(new ThingPlayerEntity { Id = thing.Id, Name = thing.Name, IdPlayer = thing.IdPlayer, Player = playerEntity});
-            }
+            var playerEntity = player.GetPlayerEntity();
+
+           /* playerEntity.Things = player.Things
+                .Select(thing => new ThingPlayerEntity { Id = thing.Id, Name = thing.Name, IdPlayer = thing.IdPlayer, Player = playerEntity })
+                .ToList(); */
+            
+            playerEntity.GetThingPlayerEntity(player);
 
             await _dbcontext.Players.AddAsync(playerEntity);
             foreach (ThingPlayerEntity thing in playerEntity.Things)

@@ -75,7 +75,8 @@ namespace GoNet.WebApi.Controllers
         public async Task<ActionResult> SaleThing(Guid id, Guid idThing)
         {
             var player = await _playersService.GetPlayerInfo(id);
-            player.Cash += (int)_bank.SaleThingPlayer(idThing);
+            _playersService.PutMoney((int)_bank.SaleThingPlayer(idThing), player);
+            //player.Cash += (int)_bank.SaleThingPlayer(idThing);
             await _playersService.Update(id, player.Cash);
 
             return Ok(player.Cash);

@@ -20,10 +20,10 @@ namespace GoNet.WebApi.Contracts
         {
             Cash = cash;
             Name = name;
-            foreach (ThingPlayer thing in things)
-            {
-                Things.Add(new ThingPlayerResponse(thing.Id, thing.Name));
-            }
+           
+            Things = things
+               .Select(p => new ThingPlayerResponse(p.Id, p.Name))
+               .ToList();
         }
     };
 

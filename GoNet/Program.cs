@@ -4,6 +4,7 @@ using GoNet.BusinessLogic.Services;
 using GoNet.BusinessLogic.Services.Abstract;
 using GoNet.Core.Abstract;
 using GoNet.DataAccess;
+using GoNet.Extensions;
 using GoNet.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,12 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.net
 // регаем зависимости
-builder.Services.AddScoped<IRoulette, Ruletka>();
-builder.Services.AddScoped<IPlayersService, PlayersService>();
-builder.Services.AddScoped<IRepositoryPlayer, RepositoryPlayer>();
-builder.Services.AddScoped<IThingsPlayersService, ThingsPlayersService>();
-builder.Services.AddScoped<IRepositoryThingPlayer, RepositoryThingPlayer>();
-builder.Services.AddScoped<IBank, Bank>();
+builder.Services.BuilderServicesServices();
 
 // регаем базу
 builder.Services.AddDbContext<DataContext>(options =>

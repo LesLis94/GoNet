@@ -9,5 +9,6 @@ namespace GoNet.DataAccess.Abstract
         public string Name { get; set; }
         public Guid IdPlayer { get; set; }
         public PlayerEntity? Player { get; set; }
+
     }
 }
