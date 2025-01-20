@@ -16,16 +16,32 @@ namespace GoNet.Extensions
                 Cash = player.Cash
             };
 
+            playerEntity.Things = player.Things
+                .Select(thing => thing.GetThingPlayerEntity())
+                .ToList();
+
             return playerEntity; 
         }
 
-        public static void GetThingPlayerEntity(this PlayerEntity playerEntity, Player player)
+        public static ThingPlayerEntity GetThingPlayerEntity(this ThingPlayer thing)
+        {
+            return new ThingPlayerEntity(thing.Id, thing.Name, thing.IdPlayer);
+        }
+        public static Player GetPlayer(this PlayerEntity playerEntity)
         {
 
-            playerEntity.Things = player.Things
-                .Select(thing => new ThingPlayerEntity { Id = thing.Id, Name = thing.Name, IdPlayer = thing.IdPlayer, Player = playerEntity })
+            var Player = new Player(playerEntity.Id, playerEntity.Name, playerEntity.Cash);
+
+            Player.Things = playerEntity.Things
+                .Select(thing => thing.GetThingPlayer())
                 .ToList();
+
+            return Player;
         }
 
+        public static ThingPlayer GetThingPlayer(this ThingPlayerEntity thing)
+        {
+            return new ThingPlayer(thing.Id, thing.Name, thing.IdPlayer);
+        }
     }
 }

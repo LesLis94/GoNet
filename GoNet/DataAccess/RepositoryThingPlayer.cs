@@ -20,30 +20,5 @@ namespace GoNet.DataAccess
         {
             await _dbcontext.Things.Where(p => p.Id == id).ExecuteDeleteAsync();
         }
-
-        public async Task<Guid> Create(ThingPlayer thing)
-        {
-            var playerEntity = new PlayerEntity
-            {
-                Id = thing.Player.Id,
-                Name = thing.Player.Name,
-                Cash = thing.Player.Cash
-            };
-
-            var thingPlayerEntity = new ThingPlayerEntity
-            {
-                Id = thing.Id,
-                Name = thing.Name,
-                IdPlayer = thing.IdPlayer,
-                Player = playerEntity
-            };
-
-            playerEntity.Things.Add(thingPlayerEntity);
-
-            await _dbcontext.Things.AddAsync(thingPlayerEntity);
-            await _dbcontext.SaveChangesAsync();
-
-            return thingPlayerEntity.Id;
-        }
     }
 }

@@ -26,7 +26,6 @@ namespace GoNet.WebApi.Controllers
         [HttpPost("SaveDBPlayer")]
         public async Task<ActionResult<Guid>> PostSaveDBPlayer(PlayerRequest request)
         {
-
             var (player, error) = Player.CreateNew(
                 Guid.NewGuid(),
                 request.name,
@@ -35,7 +34,6 @@ namespace GoNet.WebApi.Controllers
             var playerId = await _playersService.CreatePlayer(player);
 
             return Ok(playerId);
-
         }
 
         [HttpPatch("UpdatePlayer")]
@@ -49,17 +47,18 @@ namespace GoNet.WebApi.Controllers
         public async Task<ActionResult<List<PlayerResponse>>> GetPlayers()
         {
 
-            var players = await _playersService.GetAllPlayers();
-            var response = players.Select(p => new PlayerResponse(p.Id, p.Name, p.Cash));
-
+            //var players = await _playersService.GetAllPlayers();
+            //var response = players.Select(p => new PlayerResponse(p.Id, p.Name, p.Cash));
+            ***
+            var response = await _playersService.GetAllPlayersResponse();
             return Ok(response);
         }
 
         [HttpGet("GetInfoPlayer")]
         public async Task<PlayerInfo> GetInfoPlayer(Guid id)
         {
-            var player = await _playersService.GetPlayerInfo(id);
-            var response = new PlayerInfo(player.Name, player.Cash, player.Things);
+           // var player = await _playersService.GetPlayerInfo(id);
+            var response = await _playersService.GetPlayerInfoApi(id);
 
             return response;
         }
@@ -77,7 +76,7 @@ namespace GoNet.WebApi.Controllers
             var player = await _playersService.GetPlayerInfo(id);
             _playersService.PutMoney((int)_bank.SaleThingPlayer(idThing), player);
             //player.Cash += (int)_bank.SaleThingPlayer(idThing);
-            await _playersService.Update(id, player.Cash);
+           // await _playersService.Update(id, player.Cash);
 
             return Ok(player.Cash);
         }

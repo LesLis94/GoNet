@@ -13,9 +13,9 @@ namespace GoNet.DataAccess.Configurations
             builder.Property(p => p.Name)
                 .IsRequired();
             builder
-                .HasMany(p => p.Things)
-                .WithOne(t => t.Player)
-                .HasForeignKey(t => t.IdPlayer);
+                .HasMany(p => p.Things);
+                //.WithOne(t => t.Player)
+               // .HasForeignKey(t => t.IdPlayer);
         }
     }
 

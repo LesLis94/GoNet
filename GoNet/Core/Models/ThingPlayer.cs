@@ -7,20 +7,20 @@
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid IdPlayer { get; set; }
-        public Player Player { get; set; }
+       // public Player Player { get; set; }
 
-        public ThingPlayer(Guid id, string name, Guid idPlayer, Player player) {
+        public ThingPlayer(Guid id, string name, Guid idPlayer) {
             Id = id;
             Name = name;
             IdPlayer = idPlayer;   
-            Player = player;
+            //Player = player;
         }
 
         public static ThingPlayer CreateRandom(Guid idPlayer, Player player)
         {
             string name = NameRandom();
 
-            var thing = new ThingPlayer(Guid.NewGuid(), name, idPlayer, player);
+            var thing = new ThingPlayer(Guid.NewGuid(), name, idPlayer);
 
             return thing;
         }

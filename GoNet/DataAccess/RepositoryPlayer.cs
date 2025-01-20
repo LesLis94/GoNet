@@ -27,7 +27,7 @@ namespace GoNet.DataAccess
             //.AsNoTracking() // отключает лишнее отслеживание
 
             var players = playersEntity
-                .Select(p => new Player(p.Id, p.Name, p.Cash))
+                .Select(p => p.GetPlayer())
                 .ToList();
 
             return players;
@@ -41,11 +41,12 @@ namespace GoNet.DataAccess
                 .FirstOrDefaultAsync(p => p.Id == id) ?? throw new Exception($"Player not found");
 
             //.FirstOrDefaultAsync() // вернет первый найденный по условию
-            var player = new Player(playersEntity.Id, playersEntity.Name, playersEntity.Cash);
+            /*var player = new Player(playersEntity.Id, playersEntity.Name, playersEntity.Cash);
 
             player.Things = playersEntity.Things
-                .Select(pT => new ThingPlayer(pT.Id, pT.Name, pT.IdPlayer, player))
-                .ToList();
+                .Select(pT => new ThingPlayer(pT.Id, pT.Name, pT.IdPlayer))
+                .ToList(); */
+            var player = playersEntity.GetPlayer();
 
             return player;
         }
@@ -65,13 +66,14 @@ namespace GoNet.DataAccess
                 .Select(thing => new ThingPlayerEntity { Id = thing.Id, Name = thing.Name, IdPlayer = thing.IdPlayer, Player = playerEntity })
                 .ToList(); */
             
-            playerEntity.GetThingPlayerEntity(player);
-
             await _dbcontext.Players.AddAsync(playerEntity);
-            foreach (ThingPlayerEntity thing in playerEntity.Things)
+            
+            // так как настроена связь, вещи должны сами добавиться
+            /* foreach (ThingPlayerEntity thing in playerEntity.Things)
             {
                 await _dbcontext.Things.AddAsync(thing);
-            }
+            } */
+
             await _dbcontext.SaveChangesAsync();
 
             return playerEntity.Id;

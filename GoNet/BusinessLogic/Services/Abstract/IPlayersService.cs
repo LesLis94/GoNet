@@ -1,4 +1,5 @@
 ﻿using GoNet.Core.Models;
+using GoNet.WebApi.Contracts;
 
 namespace GoNet.BusinessLogic.Services.Abstract
 {
@@ -11,5 +12,7 @@ namespace GoNet.BusinessLogic.Services.Abstract
         Task Update(Guid id, int cash);
         void GiveMoney(int bid, Player player);
         void PutMoney(int money, Player player);
+        Task<PlayerInfo> GetPlayerInfoApi(Guid id);
+        Task<IEnumerable<PlayerResponse>> GetAllPlayersResponse();
     }
 }

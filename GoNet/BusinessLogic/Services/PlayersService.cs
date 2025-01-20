@@ -2,6 +2,7 @@
 using GoNet.BusinessLogic.Services.Abstract;
 using GoNet.Core.Abstract;
 using GoNet.Core.Models;
+using GoNet.WebApi.Contracts;
 
 namespace GoNet.BusinessLogic.Services
 {
@@ -14,6 +15,13 @@ namespace GoNet.BusinessLogic.Services
         public async Task<List<Player>> GetAllPlayers()
         {
             return await _repositoryPlayer.GetPlayers();
+        }
+        public async Task<IEnumerable<PlayerResponse>> GetAllPlayersResponse()
+        {
+            ***
+            var players = await GetAllPlayers();
+            var response = players.Select(p => new PlayerResponse(p.Id, p.Name, p.Cash));
+            return response;
         }
 
         public async Task<Guid> CreatePlayer(Player player)
@@ -43,11 +51,20 @@ namespace GoNet.BusinessLogic.Services
                 throw new Exception($"No money");
             }
             player.Cash -= bid;
+            await Update(player.Id, player.Cash);
         }
 
         public async void PutMoney(int money, Player player)
         {
             player.Cash += money;
+            await Update(player.Id, player.Cash);
+        }
+
+        public async Task<PlayerInfo> GetPlayerInfoApi(Guid id)
+        {
+            var player = await GetPlayerInfo(id);
+            var response = new PlayerInfo(player.Name, player.Cash, player.Things);
+            return response;
         }
     }
 }
