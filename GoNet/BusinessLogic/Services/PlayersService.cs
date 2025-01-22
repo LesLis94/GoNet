@@ -16,11 +16,10 @@ namespace GoNet.BusinessLogic.Services
         {
             return await _repositoryPlayer.GetPlayers();
         }
-        public async Task<IEnumerable<PlayerResponse>> GetAllPlayersResponse()
+        public async Task<List<PlayerResponse>> GetAllPlayersResponse()
         {
-            ***
             var players = await GetAllPlayers();
-            var response = players.Select(p => new PlayerResponse(p.Id, p.Name, p.Cash));
+            var response = players.Select(p => new PlayerResponse(p.Id, p.Name, p.Cash)).ToList();
             return response;
         }
 

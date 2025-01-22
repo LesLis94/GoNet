@@ -13,6 +13,6 @@ namespace GoNet.BusinessLogic.Services.Abstract
         void GiveMoney(int bid, Player player);
         void PutMoney(int money, Player player);
         Task<PlayerInfo> GetPlayerInfoApi(Guid id);
-        Task<IEnumerable<PlayerResponse>> GetAllPlayersResponse();
+        Task<List<PlayerResponse>> GetAllPlayersResponse();
     }
 }

@@ -49,7 +49,6 @@ namespace GoNet.WebApi.Controllers
 
             //var players = await _playersService.GetAllPlayers();
             //var response = players.Select(p => new PlayerResponse(p.Id, p.Name, p.Cash));
-            ***
             var response = await _playersService.GetAllPlayersResponse();
             return Ok(response);
         }
